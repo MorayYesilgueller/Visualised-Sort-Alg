@@ -1,2 +1,2 @@
-# Inf-Stuff
+# Visualised Sorting Algorithms
  

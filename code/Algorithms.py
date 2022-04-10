@@ -2,25 +2,11 @@ import numpy
 import pygame
 import random
 from Pygame_code import *
-#draws all lines in given array
-def draw_all(array):
-    for i in range(len(array)):
-        pygame.draw.line(screen,white,(50+2*(array[i,1]),10),(50+2*(array[i,1]),1000))
-        pygame.draw.line(screen,black,(50+2*(array[i,1]),10),(50+2*(array[i,1]),50+array[i,0]))
-        pygame.display.update()
 
-
-#draws two lines from given array
-def draw_single(array,i,j):
-    pygame.draw.line(screen,white,(50+2*i,10),(50+2*i,1000))
-    pygame.draw.line(screen,white,(50+2*(j),10),(50+2*(j),1000))
-    pygame.draw.line(screen,black,(50+2*(j),10),(50+2*(j),50+array[i+1,0]))
-    pygame.draw.line(screen,black,(50+2*i,10),(50+2*i,50+array[i,0]))
-    pygame.display.update()
 
 
 #Bubble sort algorythm simply 
-def BumbleSortus(array):
+def bubble_sort(array):
     length = len(array)
     draw_all(array)
 
@@ -42,7 +28,20 @@ def BumbleSortus(array):
     
 
 
-#merging of two arrays using 2d arrays now 
+
+#merge sort splits array in two and calls itself again until smallest possible array
+#the small arrays then get sorted and merged together again
+def merge_sort(array):
+    if len(array) < 2:
+        draw_all(array)
+        return array
+
+    #split array recursively
+    half = len(array) // 2
+    return merger(lhalf= (merge_sort(array[:half])),rhalf=(merge_sort(array[half:])))
+
+
+#function that sorts and merges 2 arrays
 def merger(lhalf,rhalf):
 
     array= numpy.array([[0,0]])
@@ -56,6 +55,7 @@ def merger(lhalf,rhalf):
 
 
         #comparison for elements in both halves based on index ir and il
+        #after sorting also applies new position value
         if int(lhalf[il,0]) <= int(rhalf[ir,0]):
             array=numpy.append(array,[lhalf[il]],axis=0)
             array[counter,1] = row_track
@@ -76,6 +76,7 @@ def merger(lhalf,rhalf):
             #merge rest
             for i in range(len(lhalf)-il):
                 array=numpy.append(array,[lhalf[il+i]],axis=0)
+            
             while counter!= len(array):
                 array[counter,1] =row_track
                 row_track += 1
@@ -96,14 +97,9 @@ def merger(lhalf,rhalf):
     draw_all(array)
     return array
 
-#merge sort splits array in two and calls itself again until smalles possible array
-def merge_sort(array):
-    if len(array) < 2:
-        draw_all(array)
-        return array
 
-    half = len(array) // 2
-    return merger(lhalf= (merge_sort(array[:half])),rhalf=(merge_sort(array[half:])))
+
+
 
 
 #create array 2d array with value and position

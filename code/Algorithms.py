@@ -17,7 +17,7 @@ def bubble_sort(array):
         for j in range(length-i-1):
             if array[j,0]> array[j+1,0]:
                 array[j,0],array[j+1,0] = array[j+1,0], array[j,0]
-                draw_single(array,array[j,1],array[j+1,1])
+                draw_double(array,array[j,1],array[j+1,1])
                 is_sorted = False
         
             if array[j,0] == array [j+1,0]:
@@ -97,7 +97,24 @@ def merger(lhalf,rhalf):
     draw_all(array)
     return array
 
-
+#shell sort works by swapping big numbers to the top in a gap and then reducing this gap and repeating
+def shell_sort(array):
+    space = len(array)// 2
+    while space > 0:
+        for i in range(space,len(array)):
+            temp = array[i,0]
+            j = i
+            #swap gaps
+            while j>= space and array[j-space,0]>temp:
+                array[j,0] = array[j-space,0]
+                draw_single(array,array[(j),1])
+                j -= space
+            #swap gaps
+            array[j,0]=temp
+            draw_single(array,array[j,1])
+        #reduce gap size
+        space = space//2
+    print(array)
 
 
 

@@ -29,9 +29,14 @@ def draw_all(array):
 
 
 #draws two lines from given array
-def draw_single(array,i,j):
+def draw_double(array,i,j):
     pygame.draw.line(screen,white,(50+2*i,10),(50+2*i,1000))
     pygame.draw.line(screen,white,(50+2*(j),10),(50+2*(j),1000))
-    pygame.draw.line(screen,black,(50+2*(j),10),(50+2*(j),50+array[i+1,0]))
+    pygame.draw.line(screen,black,(50+2*(j),10),(50+2*(j),50+array[j,0]))
+    pygame.draw.line(screen,black,(50+2*i,10),(50+2*i,50+array[i,0]))
+    pygame.display.update()
+
+def draw_single(array,i):
+    pygame.draw.line(screen,white,(50+2*i,10),(50+2*i,1000))
     pygame.draw.line(screen,black,(50+2*i,10),(50+2*i,50+array[i,0]))
     pygame.display.update()

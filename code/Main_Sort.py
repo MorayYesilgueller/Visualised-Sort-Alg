@@ -13,10 +13,14 @@ def main():
 
             array= CreateUnsortArray()
             array2= numpy.copy(array)
+            array3= numpy.copy(array)
             bubble_sort(array)
             screen.fill(white)
             draw_all(array2)
             merge_sort(array2)
+            print(array)
+            draw_all(array3)
+            shell_sort(array3)
             not_finished= False
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

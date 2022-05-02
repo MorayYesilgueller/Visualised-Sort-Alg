@@ -179,15 +179,12 @@ def shell_sort(array):
             draw_single(array,array[j,1])
         #reduce gap size
         space = space//2
-    print(array)
-
 
 
 
 #create array 2d array with value and position
 def CreateUnsortArray(sample_size):
     array= numpy.array([[random.randrange(1,sample_size), i]for i in range(sample_size)], dtype=int)
-    print(array)
     return array
 
 

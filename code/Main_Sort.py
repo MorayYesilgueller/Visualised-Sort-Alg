@@ -12,6 +12,7 @@ from pygame_widgets.textbox import TextBox
 
 
 #pygame init
+pygame.init()
 pygame.font.init()
 screen = pygame.display.set_mode((620,620))
 width = screen.get_width()
@@ -26,11 +27,14 @@ color_dark = (100,100,100)
 
 
 #text
-smallfont = pygame.font.SysFont('Corbel',25)
-playall = smallfont.render('Start all' , True , black)
-playbubble = smallfont.render('Start Bubble' , True , black)
-playmerge = smallfont.render('Start Merge' , True , black)
-playshell = smallfont.render('Start Shell' , True , black)
+smallfont = pygame.font.SysFont("Corbel",25)
+bigfont = pygame.font.SysFont("Corbel",40)
+playall = smallfont.render("Start all" , True , black)
+playbubble = smallfont.render("Start Bubble" , True , black)
+playmerge = smallfont.render("Start Merge" , True , black)
+playshell = smallfont.render("Start Shell" , True , black)
+title = bigfont.render("Choose a sorting algorithm:" , True , black)
+sample_text = smallfont.render("Sample size:", True, black)
 
 
 #slider
@@ -206,35 +210,66 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+
+            #exit condition
             if event.type == pygame.KEYDOWN:
-                run= False
+                if pygame.key.get_pressed()[pygame.K_ESCAPE] == 1:
+                    run=False
+
+
             if event.type == pygame.MOUSEBUTTONDOWN: #different checks for if mouse clicked a button
                 sample_size = int(slider.getValue())
                 if width/4 <= mouse[0] <= width/4+140 and height/4 <= mouse[1] <= height/4+40:
                     array= CreateUnsortArray(sample_size)
                     array2= numpy.copy(array)
                     array3= numpy.copy(array)
+                    bubble_time1=pygame.time.get_ticks()
                     bubble_sort(array)
+                    bubble_time2=pygame.time.get_ticks()
                     screen.fill(white)
+                    merge_time1=pygame.time.get_ticks()
                     draw_all(array2)
                     merge_sort(array2)
+                    merge_time2=pygame.time.get_ticks()
                     screen.fill(white)
+                    shell_time1=pygame.time.get_ticks()
                     draw_all(array3)
                     shell_sort(array3)
+                    shell_time2=pygame.time.get_ticks()
+                    screen.blit(smallfont.render("Bubble took: " + str(bubble_time2- bubble_time1) +" ms" , True, black) , (width/3,height/4 ))
+                    screen.blit(smallfont.render("Merge took: " + str(merge_time2- merge_time1) +" ms" , True, black) , (width/3,height/4 + 50))
+                    screen.blit(smallfont.render("Shell took: " + str(shell_time2- shell_time1) +" ms" , True, black) , (width/3,height/4 +100))
+                    pygame.display.update()
+                    pygame.time.wait(4000)
 
                 elif width/4+200 <= mouse[0] <= width/4+340 and height/4 <= mouse[1] <= height/4+40:
                     array= CreateUnsortArray(sample_size)
+                    bubble_time1=pygame.time.get_ticks()
                     bubble_sort(array)
+                    bubble_time2=pygame.time.get_ticks()
+                    screen.blit(smallfont.render("That took: " + str(bubble_time2- bubble_time1) +" ms" , True, black) , (width/3,height/3))
+                    pygame.display.update()
+                    pygame.time.wait(4000)
 
                 elif width/4 <= mouse[0] <= width/4+140 and height/4+100 <= mouse[1] <= height/4+140:
                     array= CreateUnsortArray(sample_size)
+                    merge_time1=pygame.time.get_ticks()
                     draw_all(array)
                     merge_sort(array)
+                    merge_time2=pygame.time.get_ticks()
+                    screen.blit(smallfont.render("That took: " + str(merge_time2- merge_time1) +" ms" , True, black) , (width/3,height/3))
+                    pygame.display.update()
+                    pygame.time.wait(4000)
 
                 elif width/4+200 <= mouse[0] <= width/4+340 and height/4+10 <= mouse[1] <= height/4+140:
                     array= CreateUnsortArray(sample_size)
+                    shell_time1=pygame.time.get_ticks()
                     draw_all(array)
                     shell_sort(array)
+                    shell_time2=pygame.time.get_ticks()
+                    screen.blit(smallfont.render("That took: " + str(shell_time2- shell_time1) +" ms" , True, black) , (width/3,height/3))
+                    pygame.display.update()
+                    pygame.time.wait(4000)
 
 
         #drawing buttons
@@ -257,11 +292,13 @@ def main():
         elif width/4+200 <= mouse[0] <= width/4+340 and height/4+100 <= mouse[1] <= height/4+140:
             pygame.draw.rect(screen,color_light,[width/4+200,height/4+100,140,40])
 
-        #place text on button
+        #place text on screen
         screen.blit(playall , (width/4+10,height/4+5))
         screen.blit(playbubble , (width/4+210,height/4+5))
         screen.blit(playmerge , (width/4+10,height/4+105))
         screen.blit(playshell , (width/4+210,height/4+105))
+        screen.blit(title , (width/6,height/6))
+        screen.blit( sample_text, (width/4+180,height/4+300))
 
         #update slider
         output.setText(slider.getValue())

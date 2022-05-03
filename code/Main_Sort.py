@@ -60,6 +60,7 @@ def draw_double(array,i,j):
     pygame.draw.line(screen,black,(1+2*i,height),(1+2*i,height-50-array[i,0]))
     pygame.display.update()
 
+#draws an single line
 def draw_single(array,i):
     pygame.draw.line(screen,white,(1+2*i,height),(1+2*i,1))
     pygame.draw.line(screen,black,(1+2*i,height),(1+2*i,height-50-array[i,0]))
@@ -84,8 +85,8 @@ def bubble_sort(array):
 
 
         for j in range(length-i-1):
-            if array[j,0]> array[j+1,0]:
-                array[j,0],array[j+1,0] = array[j+1,0], array[j,0]
+            if array[j,0]> array[j+1,0]:    #check if bigger
+                array[j,0],array[j+1,0] = array[j+1,0], array[j,0] #swap them
                 draw_double(array,array[j,1],array[j+1,1])
                 is_sorted = False
         
@@ -216,8 +217,8 @@ def main():
                 if pygame.key.get_pressed()[pygame.K_ESCAPE] == 1:
                     run=False
 
-
-            if event.type == pygame.MOUSEBUTTONDOWN: #different checks for if mouse clicked a button
+#different checks for if mouse clicked a button and executes the resonding algorithm
+            if event.type == pygame.MOUSEBUTTONDOWN: 
                 sample_size = int(slider.getValue())
                 if width/4 <= mouse[0] <= width/4+140 and height/4 <= mouse[1] <= height/4+40:
                     array= CreateUnsortArray(sample_size)

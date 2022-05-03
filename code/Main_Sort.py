@@ -208,7 +208,7 @@ def main():
 
 
 
-        for event in pygame.event.get():
+        for event in pygame.event.get():        #basic pygame game loop function
             if event.type == pygame.QUIT:
                 run = False
 
@@ -217,7 +217,7 @@ def main():
                 if pygame.key.get_pressed()[pygame.K_ESCAPE] == 1:
                     run=False
 
-#different checks for if mouse clicked a button and executes the resonding algorithm
+            #different checks for if mouse clicked a button and executes the responding algorithm
             if event.type == pygame.MOUSEBUTTONDOWN: 
                 sample_size = int(slider.getValue())
                 if width/4 <= mouse[0] <= width/4+140 and height/4 <= mouse[1] <= height/4+40:
